@@ -7,10 +7,13 @@ OutputDir = bin/
 IncludeDir = include/
 
 all:
-	$(Compiler) $(Src) -o $(OutputDir)$(Output)	
+	$(Compiler) $(Src) -o $(OutputDir)$(Output) -lSDL2
 
 clear:
 	rm -rf $(OutputDir)
 
-gitadd:
+gitaddsrc:
 	git add $(Sources)
+
+gitaddall:
+	git add *
