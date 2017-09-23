@@ -10,10 +10,10 @@ all:
 	$(Compiler) $(Src) -o $(OutputDir)$(Output) -lSDL2
 
 clear:
-	rm -rf $(OutputDir)
+	rm -rf $(OutputDir)*
 
 gitaddsrc:
 	git add $(Sources)
 
-gitaddall:
-	git add *
+gitaddbin:
+	git add $(OutputDir) 
