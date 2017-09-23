@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include "Rasterizer.h"
 
-
 int main()
 {
 	char* title = "title";
