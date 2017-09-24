@@ -6,13 +6,13 @@
 //Define Vector structures
 typedef struct Vec2d
 {
-	float x,y;
+	int x,y;
 }Vec2d;
 
 typedef struct Vec3d
 {
 
-	float x,y,z;
+	int x,y,z;
 }Vec3d;
 
 //Screen structure through which the rasterizer accesses pixels
@@ -33,8 +33,17 @@ typedef struct Rasterizer
 Screen* createScreen(int width, int height);
 Rasterizer* createRasterizer(Screen* screen);
 
-//Rendering funtions
+//pre-rendering funtions
+Vec2d * createVec2d(int x, int y);
+Vec3d * createVec3d(int x, int y, int z);
+
+Vec3d* convertCoordToVec3d(Vec3d* coord);
+Vec2d* convertCoordToVec2d(Vec2d* coord);
+
+void loadCoordToRenderer(Rasterizer * renderer, Vec3d * vec);
+
+//Rendering function
 void setPixel(Rasterizer* rasterizer,
-float x, float y, char r, char g, char b, char a);
+int x, int y, char r, char g, char b, char a);
 void DrawTriangle(Vec3d * v0, Vec3d * v1, Vec3d * v2);
 #endif

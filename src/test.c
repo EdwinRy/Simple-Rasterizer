@@ -26,6 +26,10 @@ int main()
 	//Renderer init
 	Screen* screen = createScreen(width,height);	
 	Rasterizer* rasterizer = createRasterizer(screen);
+	
+	//Testing	
+	
+
 
 	char running = 1;
 	while(running)
@@ -34,8 +38,8 @@ int main()
 			if(event.type == SDL_QUIT){running = 0; break;}}
 
 		//Do rendering here
+		setPixel(rasterizer,255,255,   255,0,0,255);
 
-	
 		//Stop rendering
 		SDL_UpdateTexture(texture,NULL, screen->pixels + 0, width * 4);
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
