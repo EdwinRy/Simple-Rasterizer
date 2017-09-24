@@ -17,7 +17,7 @@ Rasterizer* createRasterizer(Screen* screen)
 	return rasterizer;
 }
 
-Vec2d * createVec2d(int x, int y)
+Vec2d * createVec2d(float x, float y)
 {
 	Vec2d * vec2 = malloc(sizeof(Vec2d));
 	vec2->x = x;
@@ -25,7 +25,7 @@ Vec2d * createVec2d(int x, int y)
 	return vec2;
 }
 
-Vec3d * createVec3d(int x, int y, int z)
+Vec3d * createVec3d(float x, float y, float z)
 {
 	Vec3d * vec3 = malloc(sizeof(Vec3d));
 	vec3->x = x;
@@ -36,14 +36,19 @@ Vec3d * createVec3d(int x, int y, int z)
 
 
 
-Vec3d * convertCoordToVec3d(Vec3d* coord)
+void convertCoordToVec3d(Rasterizer* renderer, Vec3d* coord)
 {
-
+	coord->x = (0.5 * renderer->screen->width)
+				- (-coord->x * 0.5 * (renderer->screen->width));
+	coord->y = (0.5 * renderer->screen->height)
+				 - (coord->y * 0.5 * (renderer->screen->height));
+	coord->z;
 }
 
-Vec2d * convertCoordToVec2d(Vec2d* coord)
+void convertCoordToVec2d(Rasterizer* renderer, Vec2d* coord)
 {
-
+	coord->x *= renderer->screen->width;
+	coord->y *= renderer->screen->height;
 }
 
 
@@ -58,17 +63,17 @@ int x, int y, char r, char g, char b, char a)
 	rasterizer->screen->pixels[x + 3] = a;
 }
 
-int min(int x, int y, int z)
+float min(float x, float y, float z)
 {
-	int minimum = x;
+	float minimum = x;
 	if(y < minimum){minimum = y;}
 	if(z < minimum){minimum = z;}
 	return minimum;
 }
 
-int max(int x, int y, int z)
+float max(float x, float y, float z)
 {
-	int maximum = x;
+	float maximum = x;
 	if(y > maximum){maximum = y;}
 	if(z > maximum){maximum = z;}
 	return maximum;
@@ -83,10 +88,10 @@ int testEdge(Vec3d * v0, Vec3d * v1, Vec3d * v2)
 void drawTriangle(Rasterizer* renderer,Vec3d * v0, Vec3d * v1, Vec3d * v2)
 {
 	//calculate bounding rectangle
-	int minx = min(v0->x, v1->x, v2->x);
-	int maxx = max(v0->x, v1->x, v2->x);
-	int miny = min(v0->y, v1->y, v2->y);
-	int maxy = max(v0->y, v1->y, v2->y);
+	int minx = (int)min(v0->x, v1->x, v2->x);
+	int maxx = (int)max(v0->x, v1->x, v2->x);
+	int miny = (int)min(v0->y, v1->y, v2->y);
+	int maxy = (int)max(v0->y, v1->y, v2->y);
 	
 	Vec3d* point = createVec3d(0,0,0);
 	for(int y = miny; y < maxy; y++)

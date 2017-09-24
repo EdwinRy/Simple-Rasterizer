@@ -28,11 +28,26 @@ int main()
 	Rasterizer* rasterizer = createRasterizer(screen);
 	
 	//Testing	
-	Vec3d * v1 = createVec3d(255,50,0);
-	Vec3d * v2 = createVec3d(50,255,0);
-	Vec3d * v3 = createVec3d(460,255,0);	
+	Vec3d * v1 = createVec3d(0 , 1, 0);
+	Vec3d * v2 = createVec3d(-1, 0, 0);
+	Vec3d * v3 = createVec3d(1 , 0, 0);	
 
+	convertCoordToVec3d(rasterizer, v1);
+	convertCoordToVec3d(rasterizer, v2);
+	convertCoordToVec3d(rasterizer, v3);
 
+	printf("%f \n",v1->x);
+	printf("%f \n",v1->y);
+	printf("%f \n",v1->z);
+	printf("\n");
+	printf("%f \n",v2->x);
+	printf("%f \n",v2->y);
+	printf("%f \n",v2->z);
+	printf("\n");
+	printf("%f \n",v3->x);
+	printf("%f \n",v3->y);
+	printf("%f \n",v3->z);
+	printf("\n");
 	char running = 1;
 	while(running)
 	{
