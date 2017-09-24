@@ -58,7 +58,51 @@ int x, int y, char r, char g, char b, char a)
 	rasterizer->screen->pixels[x + 3] = a;
 }
 
-void drawTriangle(Vec3d * v0, Vec3d * v1, Vec3d * v2)
+int min(int x, int y, int z)
 {
+	int minimum = x;
+	if(y < minimum){minimum = y;}
+	if(z < minimum){minimum = z;}
+	return minimum;
+}
+
+int max(int x, int y, int z)
+{
+	int maximum = x;
+	if(y > maximum){maximum = y;}
+	if(z > maximum){maximum = z;}
+	return maximum;
+}
+
+int testEdge(Vec3d * v0, Vec3d * v1, Vec3d * v2)
+{
+	return (int)((v1->x - v0->x) * (v2->y - v0->y) -
+		(v1->y - v0->y) * (v2->x - v0->x));
+}
+
+void drawTriangle(Rasterizer* renderer,Vec3d * v0, Vec3d * v1, Vec3d * v2)
+{
+	//calculate bounding rectangle
+	int minx = min(v0->x, v1->x, v2->x);
+	int maxx = max(v0->x, v1->x, v2->x);
+	int miny = min(v0->y, v1->y, v2->y);
+	int maxy = max(v0->y, v1->y, v2->y);
 	
+	Vec3d* point = createVec3d(0,0,0);
+	for(int y = miny; y < maxy; y++)
+	{
+		for(int x = minx; x < maxx; x++)
+		{
+			point->x = x;
+			point->y = y;
+			int e1 = testEdge(v0,v1,point);
+			int e2 = testEdge(v1,v2,point);
+			int e3 = testEdge(v2,v0,point);	
+			
+			if(e1 < 0 && e2 < 0 && e3 < 0 )
+			{
+				setPixel(renderer, x, y, 255, 255, 255, 255);
+			}
+		}
+	}
 }
