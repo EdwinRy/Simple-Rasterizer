@@ -29,9 +29,9 @@ int main()
 	Rasterizer* rasterizer = createRasterizer(screen);
 	
 	//Testing	
-	Vec3d * v1 = createVec3d(0,1,0);
+	Vec3d * v1 = createVec3d(0,0.5,0);
 	Vec3d * v2 = createVec3d(-0.5,0,0);
-	Vec3d * v3 = createVec3d(1,0,0);	
+	Vec3d * v3 = createVec3d(0.5,0,0);	
 
 	convertCoordToVec3d(rasterizer, v1);
 	convertCoordToVec3d(rasterizer, v2);
@@ -44,7 +44,6 @@ int main()
 			if(event.type == SDL_QUIT){running = 0; break;}}
 
 		//Do rendering here
-		//setPixel(rasterizer,255,255,   255,0,0,255);
 		drawTriangle(rasterizer, v1, v2, v3);				
 
 		//Stop rendering

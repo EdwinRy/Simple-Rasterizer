@@ -26,6 +26,11 @@ typedef struct Rasterizer
 	Screen* screen;
 	char * depthBuffer;
 	Vec3d * vectors;
+	int vertCount;
+	Vec3d * indices;
+	int indicesCount;
+	Vec2d *	textureCoords;
+	int texCoordCount;
 }Rasterizer;
 
 //Renderer Initialisation
@@ -39,7 +44,7 @@ Vec3d * createVec3d(float x, float y, float z);
 void convertCoordToVec3d(Rasterizer * renderer, Vec3d* coord);
 void convertCoordToVec2d(Rasterizer * renderer, Vec2d* coord);
 
-void loadCoordToRenderer(Rasterizer * renderer, Vec3d * vec);
+void loadCoordsToRenderer(Rasterizer * renderer, Vec3d * coords, int amount);
 
 //Rendering function
 void setPixel(Rasterizer* rasterizer,
