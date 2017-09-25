@@ -15,7 +15,8 @@ int main()
 		title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		width, height, SDL_WINDOW_SHOWN);
 
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED
+		|| SDL_RENDERER_PRESENTVSYNC);
 	
 	SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888,
 		SDL_TEXTUREACCESS_STREAMING, width, height);
@@ -28,26 +29,14 @@ int main()
 	Rasterizer* rasterizer = createRasterizer(screen);
 	
 	//Testing	
-	Vec3d * v1 = createVec3d(0 , 1, 0);
-	Vec3d * v2 = createVec3d(-1, 0, 0);
-	Vec3d * v3 = createVec3d(1 , 0, 0);	
+	Vec3d * v1 = createVec3d(0,1,0);
+	Vec3d * v2 = createVec3d(-0.5,0,0);
+	Vec3d * v3 = createVec3d(1,0,0);	
 
 	convertCoordToVec3d(rasterizer, v1);
 	convertCoordToVec3d(rasterizer, v2);
 	convertCoordToVec3d(rasterizer, v3);
 
-	printf("%f \n",v1->x);
-	printf("%f \n",v1->y);
-	printf("%f \n",v1->z);
-	printf("\n");
-	printf("%f \n",v2->x);
-	printf("%f \n",v2->y);
-	printf("%f \n",v2->z);
-	printf("\n");
-	printf("%f \n",v3->x);
-	printf("%f \n",v3->y);
-	printf("%f \n",v3->z);
-	printf("\n");
 	char running = 1;
 	while(running)
 	{
@@ -62,7 +51,7 @@ int main()
 		SDL_UpdateTexture(texture,NULL, screen->pixels + 0, width * 4);
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		SDL_RenderPresent(renderer);
-
+		SDL_Delay(10);
 		SDL_RenderClear(renderer);
 	}
 	

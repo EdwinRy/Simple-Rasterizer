@@ -92,18 +92,36 @@ void drawTriangle(Rasterizer* renderer,Vec3d * v0, Vec3d * v1, Vec3d * v2)
 	int maxx = (int)max(v0->x, v1->x, v2->x);
 	int miny = (int)min(v0->y, v1->y, v2->y);
 	int maxy = (int)max(v0->y, v1->y, v2->y);
+
+	float C1X = v1->x - v0->x;
+	float C2X = v2->x - v1->x;
+	float C3X = v0->x - v2->x;
+
+	float C1Y = v1->y - v0->y;
+	float C2Y = v2->y - v1->y;
+	float C3Y = v0->y - v2->y;
 	
-	Vec3d* point = createVec3d(0,0,0);
+	//Vec3d* point = createVec3d(0,0,0);
 	for(int y = miny; y < maxy; y++)
 	{
+		float CY1 = C1X * (y - v0->y);
+		float CY2 = C2X * (y - v1->y);
+		float CY3 = C3X * (y - v2->y);
+	
 		for(int x = minx; x < maxx; x++)
 		{
-			point->x = x;
-			point->y = y;
-			int e1 = testEdge(v0,v1,point);
-			int e2 = testEdge(v1,v2,point);
-			int e3 = testEdge(v2,v0,point);	
-			
+			float CX1 = C1Y * (x - v0->x);
+			float CX2 = C2Y * (x - v1->x);
+			float CX3 = C3Y * (x - v2->x);
+			//point->x = x;
+			//point->y = y;
+			//int e1 = testEdge(v0,v1,point);
+			int e1 = CY1 - CX1;
+			//int e2 = testEdge(v1,v2,point);
+			int e2 = CY2 - CX2;
+			//int e3 = testEdge(v2,v0,point);	
+			int e3 = CY3 - CX3;
+
 			if(e1 < 0 && e2 < 0 && e3 < 0 )
 			{
 				setPixel(renderer, x, y, 255, 255, 255, 255);
