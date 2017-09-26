@@ -51,6 +51,25 @@ void convertCoordToVec2f(Rasterizer* renderer,Vec2f * coord)
 				 - (coord->y * 0.5 * (renderer->screen->height));
 }
 
+void loadCoords(Rasterizer * renderer, Vec3f ** coords, int count)
+{
+	for(int i = 0; i < count; i++)
+	{
+		convertCoordToVec3f(renderer,coords[i]);
+	}
+
+	renderer->verts = coords;
+	renderer->vertCount = count;
+
+	
+}
+
+void loadIndices(Rasterizer* renderer,int * indices, int count)
+{
+	renderer->indices = indices;
+	renderer->indicesCount = count;
+}
+
 void setPixel(Rasterizer* rasterizer,
 int x, int y, char r, char g, char b, char a)
 {	
@@ -118,10 +137,41 @@ void drawTriangle(Rasterizer* renderer,Vec3f * v0, Vec3f * v1, Vec3f * v2)
 			CX2 = C2Y * (x - v1->x);
 			CX3 = C3Y * (x - v2->x);
 			
-			if(CY1 - CX1 < 0 && CY2 - CX2 < 0 && CY3 - CX3 < 0 )
+			if(CY1 - CX1 <= 0 && CY2 - CX2 <= 0 && CY3 - CX3 <= 0 )
 			{
 				setPixel(renderer, x, y, 255, 255, 255, 255);
 			}
 		}
 	}
 }
+
+#ifdef WIN32
+	//include windows multi-threading
+#else
+void drawTriangles(Rasterizer * renderer)
+{
+	for(int i = 0; i < renderer->vertCount; i+=3)
+	{
+		drawTriangle(
+					renderer, 
+					renderer->verts[0+i],
+					renderer->verts[1+i],
+					renderer->verts[2+i]
+					);
+	}	
+}
+
+void drawIndices(Rasterizer * renderer)
+{
+	for(int i = 0; i < renderer->indicesCount; i+=3)
+	{
+		drawTriangle(
+					renderer,
+					renderer->verts[(int)renderer->indices[0+i]],
+					renderer->verts[(int)renderer->indices[1+i]],
+					renderer->verts[(int)renderer->indices[2+i]]
+					);
+	}
+
+}
+#endif

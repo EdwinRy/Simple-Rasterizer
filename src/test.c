@@ -29,13 +29,28 @@ int main()
 	Rasterizer* rasterizer = createRasterizer(screen);
 	
 	//Testing	
-	Vec3f * v1 = createVec3f(0,0.5,0);
-	Vec3f * v2 = createVec3f(-0.5,0,0);
-	Vec3f * v3 = createVec3f(0.5,0,0);	
+	Vec3f * v1 = createVec3f(-0.5,0.5,0);
+	Vec3f * v2 = createVec3f(-0.5,-0.5,0);
+	Vec3f * v3 = createVec3f(0.5,-0.5,0);
+	Vec3f * v4 = createVec3f(0.5,0.5,0);	
+	Vec3f ** vs = malloc(sizeof(Vec3f*)*4);
+	vs[0] = v1;
+	vs[1] = v2;
+	vs[2] = v3;
+	vs[3] = v4;
 
-	convertCoordToVec3f(rasterizer, v1);
-	convertCoordToVec3f(rasterizer, v2);
-	convertCoordToVec3f(rasterizer, v3);
+	int * in = malloc(sizeof(int*)*6);
+	in[0] = 0;		
+	in[1] = 1;
+	in[2] = 2;
+	in[3] = 0;
+	in[4] = 2;
+	in[5] = 3;
+
+	//convertCoordToVec3f(rasterizer,
+
+	loadCoords(rasterizer, vs, 4);
+	loadIndices(rasterizer, in, 6);
 
 	char running = 1;
 	while(running)
@@ -43,14 +58,16 @@ int main()
 		while(SDL_PollEvent(&event)){
 			if(event.type == SDL_QUIT){running = 0; break;}}
 
-		//Do rendering here
-		drawTriangle(rasterizer, v1, v2, v3);				
-
+		//Start rendering here	
+			
+		drawIndices(rasterizer);
+		//drawTriangles(rasterizer);
 		//Stop rendering
-		SDL_UpdateTexture(texture,NULL, screen->pixels + 0, width * 4);
+		SDL_UpdateTexture(texture,NULL,
+			 screen->pixels + 0, width * 4);
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		SDL_RenderPresent(renderer);
-	SDL_Delay(10);
+		SDL_Delay(10);
 		SDL_RenderClear(renderer);
 	}
 	
