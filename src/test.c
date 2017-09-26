@@ -29,13 +29,13 @@ int main()
 	Rasterizer* rasterizer = createRasterizer(screen);
 	
 	//Testing	
-	Vec3d * v1 = createVec3d(0,0.5,0);
-	Vec3d * v2 = createVec3d(-0.5,0,0);
-	Vec3d * v3 = createVec3d(0.5,0,0);	
+	Vec3f * v1 = createVec3f(0,0.5,0);
+	Vec3f * v2 = createVec3f(-0.5,0,0);
+	Vec3f * v3 = createVec3f(0.5,0,0);	
 
-	convertCoordToVec3d(rasterizer, v1);
-	convertCoordToVec3d(rasterizer, v2);
-	convertCoordToVec3d(rasterizer, v3);
+	convertCoordToVec3f(rasterizer, v1);
+	convertCoordToVec3f(rasterizer, v2);
+	convertCoordToVec3f(rasterizer, v3);
 
 	char running = 1;
 	while(running)
@@ -50,7 +50,7 @@ int main()
 		SDL_UpdateTexture(texture,NULL, screen->pixels + 0, width * 4);
 		SDL_RenderCopy(renderer, texture, NULL, NULL);
 		SDL_RenderPresent(renderer);
-		SDL_Delay(10);
+	SDL_Delay(10);
 		SDL_RenderClear(renderer);
 	}
 	

@@ -17,17 +17,17 @@ Rasterizer* createRasterizer(Screen* screen)
 	return rasterizer;
 }
 
-Vec2d * createVec2d(float x, float y)
+Vec2f * createVec2f(float x, float y)
 {
-	Vec2d * vec2 = malloc(sizeof(Vec2d));
+	Vec2f * vec2 = malloc(sizeof(Vec2f));
 	vec2->x = x;
 	vec2->y = y;
 	return vec2;
 }
 
-Vec3d * createVec3d(float x, float y, float z)
+Vec3f * createVec3f(float x, float y, float z)
 {
-	Vec3d * vec3 = malloc(sizeof(Vec3d));
+	Vec3f * vec3 = malloc(sizeof(Vec3f));
 	vec3->x = x;
 	vec3->y = y;
 	vec3->z = z;
@@ -35,7 +35,7 @@ Vec3d * createVec3d(float x, float y, float z)
 }
 
 
-void convertCoordToVec3d(Rasterizer* renderer, Vec3d* coord)
+void convertCoordToVec3f(Rasterizer* renderer, Vec3f* coord)
 {
 	coord->x = (0.5 * renderer->screen->width)
 				- (-coord->x * 0.5 * (renderer->screen->width));
@@ -43,10 +43,12 @@ void convertCoordToVec3d(Rasterizer* renderer, Vec3d* coord)
 				 - (coord->y * 0.5 * (renderer->screen->height));
 }
 
-void convertCoordToVec2d(Rasterizer* renderer, Vec2d* coord)
+void convertCoordToVec2f(Rasterizer* renderer,Vec2f * coord)
 {
-	coord->x *= renderer->screen->width;
-	coord->y *= renderer->screen->height;
+	coord->x = (0.5 * renderer->screen->width)
+				- (-coord->x * 0.5 * (renderer->screen->width));
+	coord->y = (0.5 * renderer->screen->height)
+				 - (coord->y * 0.5 * (renderer->screen->height));
 }
 
 void setPixel(Rasterizer* rasterizer,
@@ -78,11 +80,11 @@ float max(float x, float y, float z)
 	return maximum;
 }
 
-void drawTriangle(Rasterizer* renderer,Vec3d * v0, Vec3d * v1, Vec3d * v2)
-{	
+void drawTriangle(Rasterizer* renderer,Vec3f * v0, Vec3f * v1, Vec3f * v2)
+{
 	//calculate bounding rectangle
 	int minx = (int)min(v0->x, v1->x, v2->x);
-	int maxx = (int)max(v0->x, v1->x, v2->x);
+	int maxx = (int)max (v0->x, v1->x, v2->x);
 	int miny = (int)min(v0->y, v1->y, v2->y);
 	int maxy = (int)max(v0->y, v1->y, v2->y);
 
