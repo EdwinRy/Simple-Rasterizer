@@ -79,7 +79,7 @@ float max(float x, float y, float z)
 }
 
 void drawTriangle(Rasterizer* renderer,Vec3d * v0, Vec3d * v1, Vec3d * v2)
-{
+{	
 	//calculate bounding rectangle
 	int minx = (int)min(v0->x, v1->x, v2->x);
 	int maxx = (int)max(v0->x, v1->x, v2->x);
@@ -93,23 +93,29 @@ void drawTriangle(Rasterizer* renderer,Vec3d * v0, Vec3d * v1, Vec3d * v2)
 	float C1Y = v1->y - v0->y;
 	float C2Y = v2->y - v1->y;
 	float C3Y = v0->y - v2->y;
+
+	float CY1;
+	float CY2;
+	float CY3;
+
+	float CX1;
+	float CX2;
+	float CX3;
 	
+	float area = C1X*(v2->y - v0->y)-C1Y*(v2->x-v0->x);
+
 	for(int y = miny; y < maxy; y++)
 	{
-		float CY1 = C1X * (y - v0->y);
-		float CY2 = C2X * (y - v1->y);
-		float CY3 = C3X * (y - v2->y);
+		CY1 = C1X * (y - v0->y);
+		CY2 = C2X * (y - v1->y);
+		CY3 = C3X * (y - v2->y);
 	
 		for(int x = minx; x < maxx; x++)
 		{
-			float CX1 = C1Y * (x - v0->x);
-			float CX2 = C2Y * (x - v1->x);
-			float CX3 = C3Y * (x - v2->x);
-						
-			//int e1 = CY1 - CX1;
-			//int e2 = CY2 - CX2;
-			//int e3 = CY3 - CX3;
-
+			CX1 = C1Y * (x - v0->x);
+			CX2 = C2Y * (x - v1->x);
+			CX3 = C3Y * (x - v2->x);
+			
 			if(CY1 - CX1 < 0 && CY2 - CX2 < 0 && CY3 - CX3 < 0 )
 			{
 				setPixel(renderer, x, y, 255, 255, 255, 255);
