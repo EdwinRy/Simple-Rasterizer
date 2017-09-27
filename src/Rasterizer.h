@@ -3,7 +3,7 @@
 #ifndef RASTERIZER_H
 #define RASTERIZER_H
 
-//Define Vector structures
+//Define structures
 typedef struct Vec2f
 {
 	float x,y;
@@ -14,6 +14,11 @@ typedef struct Vec3f
 	float x,y,z;
 }Vec3f;
 
+typedef struct Mat4
+{
+	float * val;
+}Mat;
+
 //Screen structure through which the rasterizer accesses pixels
 typedef struct Screen
 {
@@ -21,29 +26,42 @@ typedef struct Screen
 	char * pixels;
 }Screen;
 
-typedef struct Rasterizer
+typedef struct Object
 {
-	Screen* screen;
-	char * depthBuffer;
 	Vec3f ** verts;
 	int vertCount;
 	int * indices;
 	int indicesCount;
-	Vec2f *	textureCoords;
-	int texCoordCount;
+	vec2f * textureCoords;
+	int textureCoordCount;
+	Mat4 * transformationMatrix;	
+}Object;
+
+typedef struct Rasterizer
+{
+	Screen* screen;
+	char * depthBuffer;
+	Object ** objs;
 	float far;
 	float near;
 	float fov;
+	Mat4 * projectionMatrix;
 }Rasterizer;
 
 //Renderer Initialisation
 Screen* createScreen(int width, int height);
 Rasterizer* createRasterizer(Screen* screen);
+Object* createObject(Vec3f *vertices, int vertCount, int * indices,
+					int indicesCount, Vec2f* textureCoords,
+					int textureCoordCount);
 
 //pre-rendering funtions
 Vec2f * createVec2f(float x, float y);
 Vec3f * createVec3f(float x, float y, float z);
 
+Mat4 * createMat4();
+void applyPerspective(Rasterizer* renderer, float near, float far, float fov);
+void applyProjection(Rasterizer* renderer, Mat4* projection);
 void convertCoordToVec3f(Rasterizer * renderer, Vec3f* coord);
 void convertCoordToVec2f(Rasterizer * renderer, Vec2f* coord);
 
@@ -53,6 +71,8 @@ void loadIndices(Rasterizer * renderer, int * indices, int count);
 //Rendering function
 void setPixel(Rasterizer* rasterizer,
 int x, int y, char r, char g, char b, char a);
+void translate(Object* obj, Vec3f * x, Vec3f * y, Vec3f * z);
+void rotate(Object* obj,Vec3f * x, Vec3f * y, Vec3f * z);	
 void drawTriangle(Rasterizer * renderer, Vec3f * v0, Vec3f * v1, Vec3f * v2);
 void drawTriangles(Rasterizer * renderer);
 void drawIndices(Rasterizer * renderer);

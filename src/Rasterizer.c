@@ -14,6 +14,8 @@ Rasterizer* createRasterizer(Screen* screen)
 	rasterizer->screen = screen;
 	rasterizer->depthBuffer = malloc(
 	rasterizer->screen->width * rasterizer->screen->height*4);
+	rasterizer->projectionMatrix = malloc(sizeof(Mat4));
+	rasterizer->projectionMatrix->val = malloc(sizeof(float)*16);
 	return rasterizer;
 }
 
@@ -34,6 +36,26 @@ Vec3f * createVec3f(float x, float y, float z)
 	return vec3;
 }
 
+
+
+Mat4* createMat4()
+{
+	Mat4* mat malloc(sizeof(Mat4));
+	mat->val = malloc(sizeof(float)*16);
+	return mat;
+}
+void applyPerspective(Rasterizer* renderer, float near, float far, float fov)
+{
+	renderer->far = far;
+	renderer->near = near;
+	renderer->fov = fov;
+	//write projection equation	
+}
+
+void applyProjection(Rasterizer* renderer, Mat4* mat)
+{
+	renderer->projectionMatrix = mat;
+}
 
 void convertCoordToVec3f(Rasterizer* renderer, Vec3f* coord)
 {
@@ -81,6 +103,14 @@ int x, int y, char r, char g, char b, char a)
 		rasterizer->screen->pixels[x + 2] = r;
 		rasterizer->screen->pixels[x + 3] = a;
 	}
+}
+
+void translate()
+{
+}
+
+void rotate()
+{
 }
 
 float min(float x, float y, float z)
