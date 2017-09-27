@@ -137,7 +137,7 @@ void drawTriangle(Rasterizer* renderer,Vec3f * v0, Vec3f * v1, Vec3f * v2)
 			CX2 = C2Y * (x - v1->x);
 			CX3 = C3Y * (x - v2->x);
 			
-			if(CY1 - CX1 <= 0 && CY2 - CX2 <= 0 && CY3 - CX3 <= 0 )
+			if(CY1 <=  CX1 && CY2 <= CX2 && CY3 <= CX3 )
 			{
 				setPixel(renderer, x, y, 255, 255, 255, 255);
 			}
