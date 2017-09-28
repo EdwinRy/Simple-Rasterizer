@@ -26,7 +26,13 @@ Object* createObject(Vec3f ** verts, int vertC, int *indices, int indicesC, Mat4
 	obj->vertCount = vertC;
 	obj->indices = indices;
 	obj->indicesCount = indicesC;
-	obj->transformationMatrix = 
+	obj->transformationMatrix = transform;
+	return obj;
+}
+
+void loadObject(Rasterizer* renderer, Object* obj )
+{
+	renderer->objs[objCount++] = obj;
 }
 
 

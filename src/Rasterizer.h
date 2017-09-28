@@ -42,6 +42,7 @@ typedef struct Rasterizer
 	Screen* screen;
 	char * depthBuffer;
 	Object ** objs;
+	int objCount;
 	float far;
 	float near;
 	float fov;
