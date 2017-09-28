@@ -51,8 +51,8 @@ typedef struct Rasterizer
 //Renderer Initialisation
 Screen* createScreen(int width, int height);
 Rasterizer* createRasterizer(Screen* screen);
-Object* createObject(Vec3f *verts, int vertC, int * indices, int indicesC);
-void loadObject(Rasterizer* renderer, Object* obj);
+Object* createObject(Vec3f *vertices, int vertCount, int * indices,
+					int indicesCount);
 
 //pre-rendering funtions
 Vec2f * createVec2f(float x, float y);
@@ -64,8 +64,8 @@ void applyProjection(Rasterizer* renderer, Mat4* projection);
 void convertCoordToVec3f(Rasterizer * renderer, Vec3f* coord);
 void convertCoordToVec2f(Rasterizer * renderer, Vec2f* coord);
 
-void loadCoords(Object* obj, Vec3f ** coords, int count);
-void loadIndices(Object* obj, int * indices, int count);
+void loadCoords(Rasterizer * renderer, Vec3f ** coords, int count);
+void loadIndices(Rasterizer * renderer, int * indices, int count);
 
 //Rendering function
 void setPixel(Rasterizer* rasterizer,
@@ -75,5 +75,4 @@ void rotate(Object* obj,Vec3f * x, Vec3f * y, Vec3f * z);
 void drawTriangle(Rasterizer * renderer, Vec3f * v0, Vec3f * v1, Vec3f * v2);
 void drawTriangles(Rasterizer * renderer);
 void drawIndices(Rasterizer * renderer);
-void renderObject(Rasterizer * renderer, Object* obj);
 #endif

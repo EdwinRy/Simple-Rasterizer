@@ -19,6 +19,17 @@ Rasterizer* createRasterizer(Screen* screen)
 	return rasterizer;
 }
 
+Object* createObject(Vec3f ** verts, int vertC, int *indices, int indicesC, Mat4*transform)
+{
+	Object* obj = malloc(sizeof(Object));
+	obj->verts = verts;
+	obj->vertCount = vertC;
+	obj->indices = indices;
+	obj->indicesCount = indicesC;
+	obj->transformationMatrix = 
+}
+
+
 Vec2f * createVec2f(float x, float y)
 {
 	Vec2f * vec2 = malloc(sizeof(Vec2f));
